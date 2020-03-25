@@ -8,6 +8,9 @@ const session = require('express-session');
 const cors = require('cors');
 //Import mongoose module to connect to mongodb database instance using it's connection string.
 const mongoose = require('mongoose');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+
 
 const express = require('express');
 const app = express();
@@ -17,6 +20,9 @@ const PORT = 5000;
 //Middleware 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(createProxyMiddleware('/api', { target: 'http://localhost:5000/' }));
+app.use(createProxyMiddleware('/auth/callback', { target: 'http://localhost:5000/' }))
+
 
 
 //Controllers
